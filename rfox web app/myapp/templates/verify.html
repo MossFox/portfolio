@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}
+    Verify
+{% endblock %}
+
+{% block main %}
+{% if get_flashed_messages() %}
+<header>
+    <div class="alert alert-primary mb-0 text-center" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+</header>
+{% endif %}
+<div class="page-container"> 
+    <div class="note" style="background-color: #e7a35a; margin-left: 50px;">
+        <p> &nbsp;&nbsp; To verify your account, click on the link in your email account. If you haven't received your link, check your email or try requesting the link again: </p> 
+        <form action="/verify" method="post">
+            <button type="submit">Click here to re-send verification link</button>
+        </form>
+        <p> If any issues, <a href="/contact">contact us</a> </p>
+    </div>
+</div>
+
+{% endblock %}

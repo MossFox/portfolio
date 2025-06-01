@@ -1,0 +1,87 @@
+backup 
+DATABASE_URL=sqlite:///data.db
+db = SQL(os.getenv('DATABASE_URL'))   
+
+
+database url in heroku before; sqlite:///data.db
+
+
+
+Host: c3nv2ev86aje4j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
+Port: 5432
+Database Name: d7gvnp96bg13t7
+Username: uc0j9absdmu5qd
+Password: pa5c757610b235d704cb93171e8ead0dcce6dc30ccffdcc1c1e725dd9248f2460
+
+
+    sqlite    rows = db.execute("SELECT admin FROM users WHERE id = (?)", session["user_id"])
+    sqlalchemy    rows = db.session.execute(text("SELECT admin FROM users WHERE id = ?"), [session["user_id"]]).fetchall()
+    sqlalchemy  db.session.execute(text("?"), [placeholder]).fetchall()
+            .scalar() ---- Retrieves the first column of the first row in the result set, which is the email in this case.
+            .fetchall(): Retrieves all rows that match the query. Use .scalar() or .fetchone() if you only expect a single result.
+
+
+
+
+class Gift(db.Model):
+    __tablename__ = 'gifts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), nullable=False)
+    code = db.Column(db.String(255), nullable=False)  # Add the missing 'code' column
+    status = db.Column(db.String(255), nullable=False)
+    validation = db.Column(db.String(255), nullable=False)
+    duration = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return f'<Gift {self.username}>'
+
+
+INSERT INTO users (
+    id,
+    username,
+    hash,
+    date,
+    admin,
+    email,
+    validation,
+    reset,
+    timestamp
+  )
+VALUES (
+    id:integer,
+    'username:character varying',
+    'hash:character varying',
+    'date:timestamp without time zone',
+    admin:boolean,
+    'email:character varying',
+    'validation:character varying',
+    'reset:character varying',
+    'timestamp:timestamp without time zone'
+  );
+
+
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False  # Disable redirect interception
+
+
+
+INSERT INTO schedule (date, time, availability, booked, "user") VALUES
+(27, 1700, 'Available', NULL, NULL),
+(27, 1730, 'Available', NULL, NULL),
+(27, 1800, 'Available', NULL, NULL),
+(27, 1830, 'Available', NULL, NULL),
+(28, 1330, 'Available', NULL, NULL),
+(28, 1400, 'Available', NULL, NULL),
+(28, 1430, 'Available', NULL, NULL),
+(28, 1630, 'Available', NULL, NULL),
+(28, 1700, 'Available', NULL, NULL),
+(28, 1730, 'Available', NULL, NULL),
+(28, 1800, 'Available', NULL, NULL),
+(29, 1330, 'Available', NULL, NULL),
+(29, 1400, 'Available', NULL, NULL),
+(29, 1430, 'Available', NULL, NULL),
+(29, 1630, 'Available', NULL, NULL),
+(29, 1700, 'Available', NULL, NULL),
+(29, 1730, 'Available', NULL, NULL);
+
+heroku logs --tail --app therestingfox

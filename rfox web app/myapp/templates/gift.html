@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block title %}
+    Giftcards
+{% endblock %}
+
+{% block main %}
+    <style>
+        body {
+            background-color: #f0f0f0; /* Light grey background */
+        }
+
+        table, th, tr, td {
+            border: 2px solid;
+            border-color: rgb(0, 0, 0);
+        }
+
+    </style>
+    <div class="page-container">
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary mb-0 text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+        {% if is_post %}
+        <!-- Display content for POST requests here -->
+            <div class="giftbox2">
+                <h3 style="text-align: center; background-color: #e7a35a;"> Your unique gift card </h3>
+            </div>
+            <div>
+                <img src="/static/images/giftcard.jpg" alt="Gift Image" class="gift_img">
+            </div>
+            <div style="text-align: center">
+                <a href="/static/images/giftcard.jpg" download="giftcard.jpg">Download Image</a>
+            </div>
+        {% else %}
+            <!-- Display content for GET requests here -->
+                <div class="giftbox">
+                    <div class="left">
+                        <h4>Treat your loved ones to a relaxation experience with a massage gift card from The Resting Fox Massage. Perfect for any occasion, our gift cards offer a serene escape and rejuvenating treatments tailored to their needs.</h4>
+                    </div>
+                    <div class="right">
+                        <form action="/gift" method="post">
+                            <div>
+                                <input autocomplete="off" id="to" name="to" placeholder="Gift for:" type="text" size="310">
+                            </div>
+                            <div>
+                                <input autocomplete="off" id="from" name="from" placeholder="Gift from:" type="text" size="310">
+                            </div>
+                            <div>
+                                <textarea id="message" name="message" placeholder="Message:" rows="4" cols="50"> </textarea>
+                            </div>
+                            <div>
+                                <label for="duration">Duration:</label>
+                                <select id="duration" name="duration" placeholder="Duration:">
+                                    <option value="60 minutes">60 minutes - 55£</option>
+                                    <option value="90 minutes">90 minutes - 75£</option>
+                                    <option value="120 minutes">120 minutes - 100£ </option>
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" style=" border-color: black; border-width: 2px;" type="submit" method="post">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% if session["user_id"] %}
+            <div class="gift_history">  
+                <div>
+                    <h3 style="text-align: center"> Your Giftcode history </h3>
+                </div>
+                <div>
+                    <tbody>
+                        <table>
+                            <tr>
+                                <th> Giftcode </th>
+                                <th> Status </th>
+                            </tr>
+                            {% for giftcode in giftcode %}
+                            <tr>
+                                <td> {{giftcode['code']}} </td>
+                                <td> {{giftcode['status']}} </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </tbody>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

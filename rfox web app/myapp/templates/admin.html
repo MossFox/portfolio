@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Page
+{% endblock %}
+
+{% block main %}
+
+<div class="page-container">
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+    <div class="admin_tables">  
+        <div>
+            <h3 style="text-align: center"> Giftcode history </h3>
+        </div>
+        <div>
+            <form action="/actions" method="post">
+                <input type="text" name="giftcode" placeholder="Enter gift code">
+                <button type="submit" name="action" value="search">Search</button>
+            </form>
+        </div>
+        <br>
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <th> User </th>
+                        <th> Code </th>
+                        <th> Status </th>
+                        <th> Validation </th>
+                        <th> Duration </th>
+                        <th> Activation </th>
+                        <th> Validate </th>
+                        <th> Delete </th>
+                    </tr>
+
+                    {% set search_codes = search_results | map(attribute='code') | list %}
+                    {% for gift in giftcodes_list %}
+                        <tr {% if search_results and gift['code'] in search_codes %} style="background-color: rgb(12, 249, 0);"{% endif %}>
+                            <td> {{ gift['username'] }} </td>
+                            <td> {{ gift['code'] }} </td>
+                            <td> {{ gift['status'] }} </td>
+                            <td> {{ gift['validation'] }} </td>
+                            <td> {{ gift['duration'] }} </td>
+                            <td>            
+                                <form action="/actions" method="post">
+                                    <input type="hidden" name="id" value="{{ gift['id'] }}">
+                                    <button type="submit" name="action" value="claim">Claim</button>
+                                </form>
+                            </td>    
+                            <td>                                
+                                <form action="/actions" method="post">
+                                    <input type="hidden" name="id" value="{{ gift['id'] }}">
+                                    <button type="submit" name="action" value="validate">Validate</button>
+                                </form>
+                            </td>
+                            <td>                                
+                                <form action="/actions" method="post">
+                                    <input type="hidden" name="id" value="{{ gift['id'] }}">
+                                    <button type="submit" name="action" value="delete">Delete</button>
+                                </form>
+                            </td>
+                        </tr>                        
+                    {% endfor %}
+                </tbody>    
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="admin_tables">
+        <div>
+            <h3 style="text-align: center"> Users </h3>
+        </div>
+        <div>
+            <tbody>
+                <table>
+                    <tr>
+                        <th> User </th>
+                        <th> Date </th>
+                        <th> Email </th>
+                        <th> Status </th>
+                        <th> Admin </th>
+                        <th> Validate </th>
+                        <th> Delete </th>
+                        <th> Make admin</th>
+                    </tr>
+                    {% for user in user_list %}
+                    <tr>
+                        <td>{{user['username']}}</td>
+                        <td>{{user['date']}}</td>
+                        <td>{{user['email']}}</td>
+                        <td>{{user['validation']}}</td>
+                        <td>{{'Yes' if user['admin'] else 'No'}}</td>
+                        <td> 
+                            <form action="/actions" method="post">
+                                <input type="hidden" name="username" value="{{user['username']}}">
+                                <button type="submit" name="action" value="validate_user">Validate</button>
+                            </form>
+                        </td>
+                        <td> 
+                            <form action="/actions" method="post">
+                                <input type="hidden" name="username" value="{{user['username']}}">
+                                <button type="submit" name="action" value="delete_user">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/actions" method="post">
+                                <input type="hidden" name="username" value="{{user['username']}}">
+                                <button type="submit" name="action" value="mk_adm">Mk_admin</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </tbody>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <table>
+            <form class ="note" action="/actions" method="post">
+                <h3>
+                    Email all (NB addresses each user individually when sending the email)
+                </h3>
+                <div>
+                    <input type="hidden" name="action" value="email_all">
+                    <input autocomplete="off" name="subject" placeholder="Subject" type="text"  size="310">
+                </div>
+                <div>
+                    <textarea id="w3review" style="width:200;" name="message" placeholder="Message" rows="4" cols="50"></textarea>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+            </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+body {
+    padding: 10px;
+}
+
+.new_post_title {
+    width: 100%
+}
+
+.new_post_post {
+    height: 200px;
+    width: 100%
+}
+
+.button {
+    background-color: #ADD8E6;
+}
+
+.NP {
+    border: 0.5px solid;
+    padding: 20px
+}
+
+.postTitle {
+    font-weight: bold;
+}

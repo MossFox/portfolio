@@ -1,0 +1,51 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h1> All Posts </h1>
+    {% if user.is_authenticated %}
+        <button id="new_post_button"> New Post </button>
+    {% else %}
+        <p> Please log in to see posts </p>
+    {% endif %}
+    <br><br>
+    <div class="NP" style="display: none;">
+        <h2>New Post</h2>
+        <form action="{% url 'new_post' %}" id="post" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h6> Title </h6>
+            <input class="new_post_title" type="text" name="title" placeholder="Title" required>
+            <h6> Post </h6>
+            <textarea class="new_post_post" name="post" required></textarea><br>
+            <input class="button" type="submit" name="post_button" placeholder="Post" value="Post">
+        </form>
+    </div>
+    <div id="user-info" data-user-id="{{ user.id }}">
+
+    </div>
+
+    <div id="posts">
+
+    </div>
+    <div id="pagination">
+        <button id="previous" style="display:none;">Previous</button>
+        <button id="next" style="display:none;">Next</button>
+    </div>
+    <script src="{% static 'network/functions.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            load();
+            const element = document.querySelector('.NP');
+            document.querySelectorAll('#new_post_button').forEach(button => {
+                button.addEventListener('click', () => {
+                    if (element.style.display === 'none') {
+                        element.style.display = 'block';
+                    }
+                    else {
+                        element.style.display = 'none';
+                    }
+                });
+            })
+        });
+    </script>
+{% endblock %}

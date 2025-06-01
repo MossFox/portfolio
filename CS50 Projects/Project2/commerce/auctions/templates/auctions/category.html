@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2> Category: {{ category_name }}</h2>
+    <h4> Active: </h4>
+    {% for category in categories %}
+    <div class="container">
+        <a href="{% url 'listing' category.name %}">
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" style="height: 250px">
+        </a>
+        <div class="text-content">
+            <a href="{% url 'listing' category.name %}"> <b> {{ category.name }} </b></a></br>
+            <b> Price:</b> {{ category.price }} $ <br>
+            <a> Added by: {{ category.listed_by }}</a>
+            <p>Created on {{ category.created }} </p>
+        </div>
+    </div><br>
+    {% endfor %}
+
+    <h4> Closed </h4>
+    {% for category in closed_categories %}
+    <div class="container">
+        <a href="{% url 'listing' category.name %}">
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" style="height: 250px">
+        </a>
+        <div class="text-content">
+            <a href="{% url 'listing' category.name %}"> <b> {{ category.name }} </b></a></br>
+            <b> Price:</b> {{ category.price }} $ <br>
+            <a> Added by: {{ category.listed_by }}</a>
+            <p> Created on {{ category.created }} </p>
+            <p> Finished on {{category.closed}} </p>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div id="user-info" data-user='{{ user_data|safe }}' data-user-id="{{ request.user.id }}" data-posts='{{ posts|safe }}' data-has-previous="{{ has_previous }}" data-has-next="{{ has_next }}"></div></div>
+
+</div>
+
+<div id="following">
+    <h1> Following users posts </h1>
+</div>
+
+<div id="following_posts">
+
+</div>
+
+<div id="pagination">
+    <button id="previous" style="display:none;">Previous</button>
+    <button id="next" style="display:none;">Next</button>
+</div>
+<script src="{% static 'network/functions.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const postsData = document.getElementById('user-info').dataset.posts;
+
+        const hasPrevious = document.getElementById('user-info').dataset.hasPrevious === "True";
+        const hasNext = document.getElementById('user-info').dataset.hasNext === "True";
+
+        let page = 1;
+
+        const posts = JSON.parse(postsData);
+        displayPosts(posts);
+
+        // Show pagination buttons and define their onclick behaviors
+
+        if (hasPrevious) {
+            document.querySelector('#previous').style.display = 'block';
+            document.querySelector('#previous').onclick = () => {
+                page -= 1;
+                loadFollowingPosts(page);
+            };
+        } else {
+            document.querySelector('#previous').style.display = 'none';
+        }
+
+        if (hasNext) {
+            document.querySelector('#next').style.display = 'block';
+            document.querySelector('#next').onclick = () => {
+                page += 1;
+                loadFollowingPosts(page);
+            };
+        } else {
+            document.querySelector('#next').style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock %}

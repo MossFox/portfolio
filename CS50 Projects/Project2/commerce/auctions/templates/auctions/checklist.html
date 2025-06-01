@@ -1,0 +1,76 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block extra_styles %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    h1 {
+        color: #333;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 10px;
+    }
+    input[type="checkbox"] {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<h1>My Checklist</h1>
+<a class="btn btn-sm btn-outline-primary" href="/">Back</a>
+
+
+<ul>
+    <li><input type="checkbox" id="task1" onclick="saveState('task1')"><label for="task1">Task 1: Models: Your application should have at least three models in addition to the User model: one for auction listings, one for bids, and one for comments made on auction listings. It’s up to you to decide what fields each model should have, and what the types of those fields should be. You may have additional models if you would like.</label></li>
+
+    <li><input type="checkbox" id="task2" onclick="saveState('task2')"><label for="task2">Task 2: Create Listing: Users should be able to visit a page to create a new listing. They should be able to specify a title for the listing, a text-based description, and what the starting bid should be. Users should also optionally be able to provide a URL for an image for the listing and/or a category (e.g. Fashion, Toys, Electronics, Home, etc.).</label></li>
+
+    <li><input type="checkbox" id="task3" onclick="saveState('task3')"><label for="task3">Task 3: Active Listings Page: The default route of your web application should let users view all of the currently active auction listings. For each active listing, this page should display (at minimum) the title, description, current price, and photo (if one exists for the listing).</label></li>
+
+    <li><input type="checkbox" id="task4" onclick="saveState('task4')"><label for="task4">Task 4:  Listing Page: Clicking on a listing should take users to a page specific to that listing. On that page, users should be able to view all details about the listing, including the current price for the listing. </label></li>
+    <ul>
+        <li><input type="checkbox" id="task4a" onclick="saveState('task4a')"><label for="task4a">If the user is signed in, the user should be able to add the item to their “Watchlist.” If the item is already on the watchlist, the user should be able to remove it.</label></li>
+        <li><input type="checkbox" id="task4b" onclick="saveState('task4b')"><label for="task4b">If the user is signed in, the user should be able to bid on the item. The bid must be at least as large as the starting bid, and must be greater than any other bids that have been placed (if any). If the bid doesn’t meet those criteria, the user should be presented with an error.</label></li>
+        <li><input type="checkbox" id="task4c" onclick="saveState('task4c')"><label for="task4c">If the user is signed in and is the one who created the listing, the user should have the ability to “close” the auction from this page, which makes the highest bidder the winner of the auction and makes the listing no longer active.</label></li>
+        <li><input type="checkbox" id="task4d" onclick="saveState('task4d')"><label for="task4d">If a user is signed in on a closed listing page, and the user has won that auction, the page should say so.</label></li>
+        <li><input type="checkbox" id="task4e" onclick="saveState('task4e')"><label for="task4e">Users who are signed in should be able to add comments to the listing page. The listing page should display all comments that have been made on the listing.</label></li>
+    </ul>
+    <li><input type="checkbox" id="task5" onclick="saveState('task5')"><label for="task5">Task 5: Watchlist: Users who are signed in should be able to visit a Watchlist page, which should display all of the listings that a user has added to their watchlist. Clicking on any of those listings should take the user to that listing’s page.</label></li>
+    <li><input type="checkbox" id="task6" onclick="saveState('task6')"><label for="task6">Task 6: Categories: Users should be able to visit a page that displays a list of all listing categories. Clicking on the name of any category should take the user to a page that displays all of the active listings in that category.</label></li>
+    <li><input type="checkbox" id="task7" onclick="saveState('task7')"><label for="task7">Task 7: Django Admin Interface: Via the Django admin interface, a site administrator should be able to view, add, edit, and delete any listings, comments, and bids made on the site.</label></li>
+
+</ul>
+
+<a class="btn btn-sm btn-outline-primary" href="/">Back</a>
+
+<script>
+    // Function to save the checkbox state to localStorage
+    function saveState(taskId) {
+        const checkbox = document.getElementById(taskId);
+        localStorage.setItem(taskId, checkbox.checked);
+    }
+
+    // Function to restore the checkbox state from localStorage
+    function loadState() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            const state = localStorage.getItem(checkbox.id);
+            checkbox.checked = state === 'true';
+        });
+    }
+
+    // Call loadState when the page loads
+    window.onload = loadState;
+</script>
+
+{% endblock %}
+

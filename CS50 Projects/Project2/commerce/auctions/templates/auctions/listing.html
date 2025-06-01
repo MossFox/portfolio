@@ -1,0 +1,92 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="container">
+    <img src="{{ listing.image.url }}" alt="{{ listing.name }}" style="height: 250px">
+    <div class="description">
+        <h2>{{listing.name}}</h2>
+        <p> {{listing.description}}</p>
+        {% if bid_message_green  %}
+            <div class="green"> {{ bid_message_green }} </div>
+        {% endif %}
+        {% if bid_message_red  %}
+            <div class="red"> {{ bid_message_red }} </div>
+        {% endif %}
+        {% if highest_bid %}
+          <b> Highest Bid: {{highest_bid.bid}} by {{highest_bid.user}}</b>
+         {% endif %}
+         {% if listing.active %}
+            {% if user.is_authenticated %}
+                <form action="{% url 'listing' listing.name %}" method="post">
+                    {% csrf_token %}
+                    <br>
+                    <input autofocus class="form-control" type="text" name="bid" placeholder="Bid"> <br>
+                    <input type="hidden" name="action" value="bid">
+                    <input class="button" type="submit" name="place_bid" placeholder="Place Bid" value="Place Bid"><br>
+                </form> <br>
+            {% endif %}
+            <p> Item listed by: {{listing.listed_by}} on {{listing.created}}</p>
+
+            <a href= "{% url 'category' listing.category %}"> <b> {{listing.category}} </b></a>
+            {% if user.is_authenticated %}
+                {% if watched %}
+                    <p> Item watchlisted </p>
+                    <form action="{% url 'listing' listing.name %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="watchlist_remove">
+                        <input class="button" type="submit" name="Remove" placeholder="Remove" value="Remove">
+                    </form>
+                {% else %}
+                    <form action="{% url 'listing' listing.name %}" method="post">
+                        {% csrf_token %}
+                        <br>
+                        <input type="hidden" name="action" value="watchlist_add">
+                        <input class="button" type="submit" name="Watchlist" placeholder="Watchlist" value="Watchlist">
+                    </form>
+                {% endif %}
+            {% endif %}
+            {% if user.is_authenticated and user == listing.listed_by %}
+                <form action="{% url 'listing' listing.name %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="end">
+                    <input class="button" type="submit" value="Close Listing">
+                </form>
+            {% endif %}
+        {% else %}
+                <p> Listing Closed </p>
+
+                <h1> Listing won by:  {{listing.winner}} </h1>
+        {% endif %}
+    </div>
+    <div class="bids">
+        <b>Biding history:</b>
+        {% for bid in bids %}
+        <div class="bid">
+            <p> User {{bid.user}} placed a bid of {{bid.bid}}$ </p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="comments">
+        <b> Comments: </b>
+        {% for comment in comments %}
+        <div class="comment">
+            <p> User {{comment.user}} said: <b>{{comment.comment}}</b> on {{comment.date}} </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% if listing.active %}
+    {% if user.is_authenticated %}
+        <div class="make_comment">
+            <b> Leave a comment: </b><br>
+            <form action="{% url 'listing' listing.name %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="comment">
+                <textarea style="height: 200px" id="comment" name="comment" required></textarea><br>
+                <input class="button" type="submit" name="Comment" placeholder="Comment" value="Comment">
+            </form>
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

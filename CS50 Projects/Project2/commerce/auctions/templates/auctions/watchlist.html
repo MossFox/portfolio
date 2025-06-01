@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2> {{ user }} watchlist</h2>
+    {% for watch in watchlist %}
+    <div class="container">
+        <a href="{% url 'listing' watch.listing.name %}">
+            <img src="{{ watch.listing.image.url }}" alt="{{ watch.listing.name }}" style="height: 250px">
+        </a>
+        <div class="text-content">
+            <a href="{% url 'listing' watch.listing.name %}"> <b> {{ watch.listing.name }} </b></a></br>
+            <b> Price:</b> {{ watch.listing.price }} $ <br>
+            <a> Added by: {{ watch.listing.listed_by }} </a>
+            <p> Created on {{ watch.listing.created }} </p>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

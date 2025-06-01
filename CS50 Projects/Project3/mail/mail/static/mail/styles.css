@@ -1,0 +1,38 @@
+textarea {
+    min-height: 400px;
+}
+
+#mail {
+    outline-style: solid;
+    outline-width: thin;
+}
+
+#email-details {
+    outline-style: solid;
+    padding: 25px;
+}
+
+#container {
+    display: flex;
+}
+
+#right {
+    position: absolute;
+    right: 250px;
+}
+
+#message {
+    outline-style: solid;
+    padding: 25px;
+    height:auto;
+    width:auto;
+}
+
+#mail {
+    outline-style: solid;
+}
+
+#reply_button {
+    margin-left: 10px;
+}
+

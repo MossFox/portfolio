@@ -1,0 +1,53 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2> {{ user }} active listings</h2>
+    {% for listing in my_listings_active %}
+    <div class="container">
+        <a href="{% url 'listing' listing.name %}">
+            <img src="{{ listing.image.url }}" alt="{{ listing.name }}" style="height: 250px">
+        </a>
+        <div class="text-content">
+            <a href="{% url 'listing' listing.name %}"> <b> {{ listing.name }} </b></a></br>
+            <b> Starting price:</b> {{ listing.price }} $ <br>
+            <b> Highest Bid:</b> {{ listing.highest_bid }} $<br>
+            <a> Added by: {{ listing.listed_by }} </a>
+            <p> Created on {{ listing.created }} </p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h2> Finished listings</h2>
+    {% for listing in my_listings_past %}
+    <div class="container">
+        <a href="{% url 'listing' listing.name %}">
+            <img src="{{ listing.image.url }}" alt="{{ listing.name }}" style="height: 250px">
+        </a>
+        <div class="text-content">
+            <a href="{% url 'listing' listing.name %}"> <b> {{ listing.name }} </b></a></br>
+            <b> Starting price:</b> {{ listing.price }} $ <br>
+            <b> Sold for:</b> {{ listing.highest_bid }} $<br>
+            <a> Added by: {{ listing.listed_by }} </a>
+            <p> Created on {{ listing.created }} </p>
+            <p>Finished on {{listing.closed}} </p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h2> Listing {{ user }} won</h2>
+    {% for listing in winner %}
+    <div class="container">
+        <a href="{% url 'listing' listing.name %}">
+            <img src="{{ listing.image.url }}" alt="{{ listing.name }}" style="height: 250px">
+        </a>
+        <div class="text-content">
+            <a href="{% url 'listing' listing.name %}"> <b> {{ listing.name }} </b></a></br>
+            <b> Price:</b> {{ listing.price }} $ <br>
+            <b> Sold for:</b> {{ listing.highest_bid }} $<br>
+            <a> Added by: {{ listing.listed_by }} </a>
+            <p> Created on {{ listing.created }} </p>
+            <p> Finished on {{listing.closed}} </p>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

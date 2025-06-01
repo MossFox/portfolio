@@ -1,0 +1,63 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<!-- this div contains: data-user - information about the selected user;
+data-user-id - logged in user id; information about the posts but the selected user;
+data-has-previous and data-has-next - attributes indicate whether there are previous or next pages
+in the paginated posts. They help in navigating through the paginated list of posts. -->
+<div id="user-info" data-user='{{ user_data|safe }}' data-user-id="{{ request.user.id }}" data-posts='{{ posts|safe }}' data-has-previous="{{ has_previous }}" data-has-next="{{ has_next }}"></div></div>
+
+<div id="profile">
+    <h1> Profile Page </h1>
+</div>
+
+<div id="profile_posts">
+
+</div>
+
+<div id="pagination">
+    <button id="previous" style="display:none;">Previous</button>
+    <button id="next" style="display:none;">Next</button>
+</div>
+<script src="{% static 'network/functions.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the page number
+    let page = 1;
+
+    // Get the information about the selected user in JS
+    const userInfo = JSON.parse(document.getElementById('user-info').dataset.user);
+
+    const hasPrevious = document.getElementById('user-info').dataset.hasPrevious === "True";
+    const hasNext = document.getElementById('user-info').dataset.hasNext === "True";
+
+    // Directly use the userInfo as a JavaScript object (no need to JSON.parse)
+    const user = userInfo;
+    profile_load(user);  // Uses the profile load function to display the information (posts)
+
+    // Show pagination buttons and define their onclick behaviors
+    if (hasPrevious) {
+        document.querySelector('#previous').style.display = 'block';
+        document.querySelector('#previous').onclick = () => {
+            page -= 1;
+            loadProfilePosts(page, user);
+        };
+    } else {
+        document.querySelector('#previous').style.display = 'none';
+    }
+
+    if (hasNext) {
+        document.querySelector('#next').style.display = 'block';
+        document.querySelector('#next').onclick = () => {
+            page += 1;
+            loadProfilePosts(page, user);
+        };
+    } else {
+        document.querySelector('#next').style.display = 'none';
+    }
+});
+
+</script>
+
+{% endblock %}

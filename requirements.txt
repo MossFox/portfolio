@@ -1,4 +1,0 @@
-Django, Python, JavaScript, HTML
-
-As far as i can remember, no other packages relevant to this code were installed.
-All imported functions are specified in views.py

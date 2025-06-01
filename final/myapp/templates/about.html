@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    About
+{% endblock %}
+
+{% block main %}
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-size: 110%; /* Change text size to 140% */
+    }
+</style>
+<div class="page-container">
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+    <div class="about" style="margin-left:10px;margin-right:10px">
+        <div class="introduction">
+            <h2> About the therapist </h2>
+            <img src="/static/images/dan.jpg" alt="Daniel" width="350" height="450">
+            <table>
+                <tr>
+                    <p style="font-family: Arial, sans-serif">
+                        Daniel specializes in sports, remedial, Swedish, and tool-assisted massage techniques. With a background in athletics, weightlifting, and partner acrobatics, he uses his expertise to help athletes and physical performers recover after intense physical activity and return to peak health. Based in Edinburgh, Daniel is dedicated to providing personalized care, ensuring that each client receives the attention they need to stay strong, flexible, and ready for their next challenge. Whether you're a professional athlete or a weekend warrior, Daniel is here to help you achieve and maintain optimal performance.
+                    </p>
+                    <h3> Qualified in 2023 </h3>
+                </tr>
+            </table>
+        </div>
+        <div class="photos" style="text-align: center;" >
+            <img src="/static/images/istock1.jpg" alt="Photo 1" width="500" height="338">
+            <img src="/static/images/istock2.jpg" alt="Photo 2" width="500" height="338">
+            <img src="/static/images/istock3.jpg" alt="Photo 3" width="500" height="338">
+        </div>
+    </div>
+</div>
+{% endblock %}

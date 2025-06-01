@@ -1,0 +1,16 @@
+LOAD DATABASE
+     FROM sqlite:///data.db
+     INTO postgresql://uc0j9absdmu5qd:pa5c757610b235d704cb93171e8ead0dcce6dc30ccffdcc1c1e725dd9248f2460@c3nv2ev86aje4j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d7gvnp96bg13t7
+
+ WITH include no tablespaces, data only;
+
+ALTER SCHEMA 'main' RENAME TO 'public';
+
+-- Optional: Map SQLite tables to PostgreSQL tables
+-- Note: Adjust table names and mappings as necessary
+-- Example:
+-- ALTER TABLE old_table_name RENAME TO new_table_name;
+
+-- Optional: Define specific column transformations here
+-- Example:
+-- ALTER TABLE table_name ALTER COLUMN column_name SET DATA TYPE new_data_type;

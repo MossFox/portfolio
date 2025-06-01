@@ -1,0 +1,199 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Schedule
+{% endblock %}
+
+{% block main %}
+{% if admin %}
+<div class="page-container">
+    <div class="schedule">
+        <h1 class="w3-xxxlarge w3-text-red"><b> Event Schedule</b> </h1>
+        <p class="sch_intro"> Take a well-deserved break during the festival with Resting Fox Massage, offering therapeutic 30-minute sessions to help you relax and recharge. Our skilled therapist will be available  on-site for booking throughout the festival. To secure your spot, simply check the schedule below for availability or visit us in person to request a session. Don’t miss the chance to unwind and enhance your festival experience with a rejuvenating massage. </p>
+        <p> The cost is 25£ per 30 minute session </p>
+        <p> The event page and timetable can be found <a href="https://edinburghacrofestival.github.io/" target="_blank">here</a></p>
+        <tbody>
+            <table>
+                <tr>
+                    <th> Date </th>
+                    <th> Time </th>
+                    <th> Avalability </th>
+                    {% if admin %}
+                    <th>Booked by</th>
+                    <th> Clear </th>
+                    {% endif %}
+                </tr>
+                <h5><b> 27th </b></h5>
+                {% for day1 in day1 %}
+                <tr>
+                    <td> {{day1['date']}} </td>
+                    <td> {{day1['time']}} </td>
+                    <td class="{{ 'available' if day1['availability'] == 'Available' else 'occupied' }}"> {{day1['availability']}} </td>
+                    {% if admin %}
+                    <td> {{day1['booked']}} </td>
+                    <td>            
+                        <form action="/actions" method="post">
+                            <input type="hidden" name="id" value="{{ day1['id'] }}">
+                            <button type="submit" name="action" value="clear">Clear</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+            <table>
+                <tr>
+                    <th> Date </th>
+                    <th> Time </th>
+                    <th> Avalability </th>
+                    {% if admin %}
+                    <th>Booked by</th>
+                    <th> Clear</th>
+                    {% endif %}                        
+                </tr>
+                <h5><b> 28th </b></h5>
+                {% for day2 in day2 %}
+                <tr>
+                    <td> {{day2['date']}} </td>
+                    <td> {{day2['time']}} </td>
+                    <td class="{{ 'available' if day2['availability'] == 'Available' else 'occupied' }}"> {{day2['availability']}} </td>
+                    {% if admin %}
+                    <td> {{day2['booked']}} </td>
+                    <td>            
+                        <form action="/actions" method="post">
+                            <input type="hidden" name="id" value="{{ day2['id'] }}">
+                            <button type="submit" name="action" value="clear">Clear</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+            <table>
+                <tr>
+                    <th> Date </th>
+                    <th> Time </th>
+                    <th> Avalability </th>
+                    {% if admin %}
+                    <th>Booked by</th>
+                    <th> Clear </th>
+                    {% endif %}
+                </tr>
+                <h5><b> 29th </b></h5>
+                {% for day3 in day3 %}
+                <tr>
+                    <td> {{day3['date']}} </td>
+                    <td> {{day3['time']}} </td>
+                    <td class="{{ 'available' if day3['availability'] == 'Available' else 'occupied' }}"> {{day3['availability']}} </td>
+                    {% if admin %}
+                    <td> {{day3['booked']}} </td>
+                    <td>            
+                        <form action="/actions" method="post">
+                            <input type="hidden" name="id" value="{{ day3['id'] }}">
+                            <button type="submit" name="action" value="clear">Clear</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </tbody>
+        <br>
+        {% if get_flashed_messages() %}
+        <header>
+            <div id="alert" class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("alert").scrollIntoView();
+            });
+        </script>
+            {% endif %}
+
+            {% if 'user_id' in session: %}        
+                {% if not booking or admin %}
+                <form action="/schedule" method="post">
+                    <div class="mb-3">
+                        <label for="date"> <h3> Book an appointment </h3> </label>
+                        <div class="mb-3">
+                            <input autocomplete="off" class="form-control mx-auto w-auto" name="name" placeholder="Name" type="text">
+                        </div>
+                        <select name="date" id="date">
+                            <option> Date </option>
+                            {% for date in date %}
+                            <option value="{{date['date']}}"> {{date['date']}}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="time" id="time">
+                            <option> Time </option>
+                            {% for time in time %}
+                            <option value="{{time['time']}}"> {{time['time']}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit"> Book </button>
+                </form>
+
+                <h4> If you would like a session outside of the scheduled appointments, speak with Daniel or contact us by email. </h4>
+
+                {% else %}
+                    <h3> You are Booked </h3>
+                    <h4> On the {{booked[0]['date']}}th at {{booked[0]['time']}} </h4>
+                    <h6> If you would like another appointment, contact the therapist </h6>
+                    <h5> To cancel appointment: </h5>
+                    <form id ='cancel' type="submit" method="post">
+                        <button> Cancel </button>
+                    </form>             
+                {% endif %}
+            {% else %}
+            <h3> To book an appointment, please register or login</h3>
+            {% endif %}
+    </div>
+</div>
+
+
+<script>
+    var dateDropdown = document.querySelector('#cancel');
+    dateDropdown.addEventListener('submit', function() {
+    fetch('/cancel', {
+        method: 'POST',
+    })
+    .then(response => response.json());
+});
+</script>
+<script>
+var dateDropdown = document.querySelector('#date');
+dateDropdown.addEventListener('change', function() {
+// This code will be executed when the selected option in the date dropdown changes
+select_date = dateDropdown.value
+var timeDropdown = document.querySelector('#time');
+timeDropdown.innerHTML = '';
+fetch('/get_times', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        date: dateDropdown.value,
+    }),
+})
+.then(response => response.json())
+.then(data => {
+// data is the response from the server
+// clear the time dropdown and add the new options here
+for (let times of data) {
+    let option = document.createElement('option');
+    option.value = times;
+    option.text = times;
+    timeDropdown.appendChild(option);
+}
+});
+});
+
+
+
+</script>
+{% endif %}
+{% endblock %}

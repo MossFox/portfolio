@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Password recovery
+{% endblock %}
+
+{% block main %}
+{% if get_flashed_messages() %}
+<header>
+    <div class="alert alert-primary mb-0 text-center" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+</header>
+{% endif %}
+<div class="page-container" style="margin-bottom: 70px;">
+    <div class="login_container">
+        <div class="login">
+            <form action="/forgot" method="post">
+                <div class="mb-3">
+                    <h3> Enter your email </h3>
+                    <input class="form-control mx-auto w-auto" name="email" placeholder="Email" type="email">
+                </div>
+                <button class="btn btn-primary" type="submit">Recover</button>
+            </form>
+        </div>
+        <div class="note">
+            <p> &nbsp;&nbsp; If your email address is on our database, we will send you a link to change your password. </p> 
+        </div>
+    </div>
+</div>
+{% endblock %}

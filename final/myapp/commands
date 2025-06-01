@@ -1,0 +1,37 @@
+CREATE TABLE users (id INTEGER PRIMARY KEY, username varchar(255), hash varchar(255), date DATETIME);
+
+DROP TABLE nameoftable; ------- DELETES THE WHOLE TABLE!!!
+DELETE FROM gifts; -------- DELETES THE ROWS IN THE TABLE!!!
+
+ALTER TABLE table_name ADD column_name varchar(255);
+
+UPDATE schedule SET availability = 'Available';
+INSERT INTO schedule (id,date,time,availability,booked, user) VALUES (1, 27, 1700, 'Available', Null, Null);
+
+CREATE TABLE reviews (id INTEGER PRIMARY KEY, review varchar(10000), author varchar(255));
+
+UPDATE reviews SET review = 'Discovering The Resting Fox Massage was a delightful surprise. The peaceful, welcoming ambiance immediately put me at ease. The staff were incredibly attentive and courteous.
+
+I opted for the Deep tissue massage, and it exceeded my expectations. Daniel, was amazing, using a perfect mix of gentle and firm techniques. The heated massage table and tranquil decor enhanced the entire experience.
+
+After the session, I felt incredibly rejuvenated and stress-free. I highly recommend The Resting Fox Massage for anyone seeking a high-quality, relaxing massage. I cant wait for my next visit!' WHERE id = 2;
+
+      -- {% if admin %} Only admin can see this {% endif %}
+
+Heroku comitting:
+
+
+heroku login
+git add .
+git commit -m "test"
+git push heroku main
+heroku logs --tail
+
+to copy the database: 
+heroku ps:copy data.db --app therestingfox --output new_data.db
+
+
+UPDATE reviews SET review = 'Working with Daniel has been a dream, he helped me understand many new things with my problems post surgery and helped address them in ways other therapists did not. He''s always open to learning and looking into a problem he''s yet to encounter to provide the best treatment. Every session flew by and felt like a catch up with a friend. I cannot recommend this treatment enough!' WHERE id = 1;
+
+
+

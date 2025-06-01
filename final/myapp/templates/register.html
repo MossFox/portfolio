@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+{% if get_flashed_messages() %}
+<header>
+    <div class="alert alert-primary mb-0 text-center" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+</header>
+{% endif %}
+<div class="page-container" style="background-color: #e7a35a; width: 300px; margin-left: 5px; margin-bottom: 30px;">
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <h3> Enter your username </h3>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <h3> Choose a password </h3>
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <h3> Enter your email </h3>
+            <input class="form-control mx-auto w-auto" name="email" placeholder="Email" type="email">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</div>
+{% endblock %}

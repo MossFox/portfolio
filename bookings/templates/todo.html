@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+Work in progress
+<button id = "time" > Check time </button>
+<script>
+document.querySelector('#time').addEventListener('click', () => {
+        console.log("click")
+        startCheckClassOnHour();
+        date_update();
+        placeholder_time_checker();
+    })
+</script>
+{% endblock %}
+
+

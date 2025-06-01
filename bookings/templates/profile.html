@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+<style>
+    table {
+        border-collapse: collapse;
+        margin: 20px auto;
+        background-color: #fff;
+        border: 2px solid #dee2e6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .selected {
+        background-color: orange;
+    }
+
+    th,
+    td {
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #343a40;
+    }
+    .centered {
+        text-align: center;
+    }
+
+</style>
+User Profile
+<div class="profile" data-bookings="{{ bookings }}" data-favorites="{{ favorites }}" data-history="{{ history }}"> </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let profilebox = document.querySelector('.profile')
+        if (profilebox) {
+            const BookingsData = JSON.parse(document.querySelector('.profile').dataset.bookings);
+            const FavoritesData = JSON.parse(document.querySelector('.profile').dataset.favorites);
+            const HistoryData = JSON.parse(document.querySelector('.profile').dataset.history);
+            console.log(HistoryData)
+            profile(BookingsData, FavoritesData, HistoryData);
+        }
+    });
+</script>
+{% endblock %}
+

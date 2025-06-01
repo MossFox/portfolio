@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<!-- Get flashed? -->
+{% for message in messages %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert("{{ message }}");
+        })
+    </script>
+{% endfor %}
+<div class="page-container">
+    <div class="login_container">
+        <div class="login">
+            <h3> Login </h3>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Log In</button>
+                </form>
+            <a href="/forgot"> Forgot Password? </a>
+        </div>
+        <div class="note">
+            <p> &nbsp;&nbsp; In order to keep track of your bookings, for scheduling purposes during events and if you would like to request a giftcard, we ask our users to create a simple acount. </p> 
+        </div>
+    </div>
+</div>
+{% endblock %}

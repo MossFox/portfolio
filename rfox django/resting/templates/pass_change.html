@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Password change
+{% endblock %}
+
+{% block main %}
+
+<!-- Get Flashed ? -->
+{% for message in messages %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        alert("{{ message }}");
+    })
+</script>
+{% endfor %}
+
+<div class="page-container">
+    <form action="{% url 'pass_change' %}" method="post">
+
+        {% csrf_token %}
+        <div class="mb-3">
+            <h3> Enter your username </h3>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <h3> Enter your password </h3>
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <h3> Choose a new password </h3>
+            <input class="form-control mx-auto w-auto" name="newpass" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+
+    </form>
+</div>
+{% endblock %}

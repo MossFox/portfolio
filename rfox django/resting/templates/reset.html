@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Reset
+{% endblock %}
+
+{% block main %}
+
+<div class="page-container" style="background-color: #e7a35a; width: 300px; margin-left: 5px; margin-bottom: 80px;">
+    <div class="alert2">
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    </div>
+    <form action="{% url 'reset' %}" method="post">
+        <input type="hidden" name="token" value="{{ token }}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <h3> Choose a new password </h3>
+            <input type="hidden" name="token" value="{{ token }}">
+            <input class="form-control mx-auto w-auto" name="newpass" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Reset</button>
+    </form>
+</div>
+{% endblock %}

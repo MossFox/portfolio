@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Page
+{% endblock %}
+
+{% block main %}
+
+<div class="page-container">
+<!-- Get Flashed? -->
+    {% for message in messages %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert("{{ message }}");
+        })
+    </script>
+    {% endfor %}
+    {% if user.is_staff %}
+    <div class="admin_tables">  
+        <table>
+            <form class ="note" action="/actions/" method="post">
+                {% csrf_token %}
+                <h3>
+                    Email all (NB addresses each user individually when sending the email)
+                </h3>
+                <div>
+                    <input type="hidden" name="action" value="email_all">
+                    <input autocomplete="off" name="subject" placeholder="Subject" type="text"  size="310">
+                </div>
+                <div>
+                    <textarea id="w3review" style="width:200;" name="message" placeholder="Message" rows="4" cols="50"></textarea>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+            </table>
+    </div>
+    {% else %}
+    <div>
+        <p> You shouldn't be here </p>
+    </div> 
+    {% endif %}
+</div>
+
+{% endblock %}

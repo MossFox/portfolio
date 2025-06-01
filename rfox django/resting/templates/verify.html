@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}
+    Verify
+{% endblock %}
+
+{% block main %}
+<!-- Get Flashed? -->
+{% for message in messages %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        alert("{{ message }}");
+    })
+</script>
+{% endfor %}
+<div class="page-container"> 
+    <div class="note" style="background-color: #e7a35a; margin-left: 50px;">
+        <p> &nbsp;&nbsp; To verify your account, click on the link in your email account. If you haven't received your link, check your email or try requesting the link again: </p> 
+        <form action="/verify" method="post">
+            <button type="submit">Click here to re-send verification link</button>
+        </form>
+        <p> If any issues, <a href="/contact">contact us</a> </p>
+    </div>
+</div>
+
+{% endblock %}
